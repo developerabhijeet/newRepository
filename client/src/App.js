@@ -1,8 +1,7 @@
-import { React, useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import Home from './components/home/Home';
 import Login from './components/auth/Login';
-import './App.css';
 import Footer from './components/layout/Footer';
 import Signup from './components/auth/Signup';
 import Post from './components/post/Post';
@@ -15,7 +14,7 @@ import ViewUser from './components/auth/ViewUser';
 import EditProfile from './components/home/EditProfile';
 import Reset from './components/auth/Reset';
 import NewPassword from './components/auth/NewPassword';
-
+import './App.css';
 function App() {
 
   return (

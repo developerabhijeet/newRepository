@@ -40,12 +40,13 @@ router.post('/upload',upload.single("file"),async (req,res)=>{
  
   
   const id = req.body.userid
-  const filename = req.body.filedata
+  const file = req.file;
+  console.log("file",file)
   try{
     const url = req.protocol+'://'+req.get('host')
     console.log(req.file);
     const Imagedata ={
-      image :url + "/public/" + filename,
+      image :url + "/public/" + file.filename,
     }
     console.log
     await User.findByIdAndUpdate(id, Imagedata).then(data =>res.json(data))
@@ -312,8 +313,8 @@ router.route('/logout').get((req, res) => {
 })
 
 router.route('/like').put(requireLogin, (req, res) => {
-  Post.findByIdAndUpdate(req.body.postId, {
-    $push: { likes: req.body.user_id }
+  Post.findByIdAndUpdate(req.body.id, {
+    $push: { likes: req.body.user_Id }
   }, {
     new: true
   }).exec((err, result) => {
@@ -327,8 +328,8 @@ router.route('/like').put(requireLogin, (req, res) => {
 })
 
 router.route('/unlike').put((req, res) => {
-  Post.findByIdAndUpdate(req.body.postId, {
-    $pull: { likes: req.body.user_id }
+  Post.findByIdAndUpdate(req.body.id, {
+    $pull: { likes: req.body.user_Id }
   }, {
     new: true
   }).exec((err, result) => {
@@ -342,11 +343,11 @@ router.route('/unlike').put((req, res) => {
 
 router.route('/comment').put(requireLogin, (req, res) => {
   const comment = {
-    text: req.body.text,
-    postedBy: req.body.user_name,
-    userInfo: req.body.user_id
+    text: req.body.texts,
+    postedBy: req.body.user_Name,
+    userInfo: req.body.user_Id
   }
-  Post.findByIdAndUpdate(req.body.postId, {
+  Post.findByIdAndUpdate(req.body.post_id, {
     $push: { comments: comment }
   }, {
     new: true

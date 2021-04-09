@@ -1,4 +1,67 @@
-import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, POST_REQUEST, POST_SUCCESS, POST_FAIL, USER_LOGOUT_SUCCESS, USER_EDITPROFILE_REQUEST, USER_EDITPROFILE_SUCCESS, USER_EDITPROFILE_FAIL, NEWPASSWORD_FAIL, NEWPASSWORD_REQUEST, NEWPASSWORD_SUCCESS, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAIL, IMAGE_REQUEST, IMAGE_SUCCESS, IMAGE_FAIL } from "../actions/users/actionTypes";
+import { USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, POST_REQUEST, POST_SUCCESS, POST_FAIL, USER_LOGOUT_SUCCESS, USER_EDITPROFILE_REQUEST, USER_EDITPROFILE_SUCCESS, USER_EDITPROFILE_FAIL, NEWPASSWORD_FAIL, NEWPASSWORD_REQUEST, NEWPASSWORD_SUCCESS, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAIL, IMAGE_REQUEST, IMAGE_SUCCESS, IMAGE_FAIL, LIKE_REQUEST, LIKE_SUCCESS, LIKE_FAIL,UNLIKE_REQUEST, UNLIKE_SUCCESS, UNLIKE_FAIL, COMMENT_FAIL, COMMENT_SUCCESS, COMMENT_REQUEST} from "../actions/users/actionTypes";
+
+const commentReducer = (state={},action)=>{
+  switch(action.type){
+    case COMMENT_REQUEST:
+      return{
+        loading: true,
+      }
+      case COMMENT_SUCCESS:
+        return{
+          commment: action.payload,
+          success: true,
+        }
+        case COMMENT_FAIL:
+          return{
+            loading: false,
+            error: action.payload
+          }
+          default:
+            return state;
+  }
+}
+
+const unlikePostReducer = (state={},action)=>{
+  switch(action.type){
+    case UNLIKE_REQUEST:
+      return{
+        loading: true,
+      }
+      case UNLIKE_SUCCESS:
+        return{
+          unlike: action.payload,
+          success: true,
+        }
+        case UNLIKE_FAIL:
+          return{
+            loading: false,
+            error: action.payload
+          }
+          default:
+            return state;
+  }
+}
+const likePostReducer = (state={},action)=>{
+  switch(action.type){
+    case LIKE_REQUEST:
+      return{
+        loading: true,
+      }
+      case LIKE_SUCCESS:
+        return{
+          like: action.payload,
+          success: true,
+        }
+        case LIKE_FAIL:
+          return{
+            loading: false,
+            error: action.payload
+          }
+          default:
+            return state;
+  }
+}
+
 const uploadImageReducer = (state = {}, action) => {
   switch (action.type) {
     case IMAGE_REQUEST:
@@ -7,8 +70,9 @@ const uploadImageReducer = (state = {}, action) => {
       };
     case IMAGE_SUCCESS:
       return {
-        userInfo: action.payload,
-      }
+        image: action.payload,
+        success: true,
+      };
     case IMAGE_FAIL:
       return {
         error: action.payload,
@@ -130,4 +194,4 @@ const userReducer = (state = {}, action) => {
       return state;
   }
 }
-export { userReducer, postReducer, updateReducer, newPassword, resetPassword, uploadImageReducer };
+export { userReducer, postReducer, updateReducer, newPassword, resetPassword, uploadImageReducer, likePostReducer, unlikePostReducer, commentReducer };

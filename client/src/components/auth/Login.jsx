@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { Redirect, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import {  Link } from 'react-router-dom';
 import { loginUserAction } from '../../redux/actions/users/userActions';
-import { UserContext } from '../../UserContext';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Container, Col, Form,

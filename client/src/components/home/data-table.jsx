@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
 import './post.css';
 import { Link } from 'react-router-dom';
-import { Container, Col, Label, Button } from 'reactstrap';
+import { Table, Button} from 'reactstrap';
 
 class DataTable extends Component {
   render() {
     return (
       <>
-        <br /><br />
-        <Col>
-          <Label className="font-weight-bold">{this.props.obj.post}</Label>
-        </Col>
-        <Link clasName="link" to={`/post/${this.props.obj._id}`}>View Post </Link>
+      
         <br />
+      <Table dark>
+          <tbody>
+            <th><h5>Problem Statement:</h5></th>
+            <tr>
+            <td> <strong><h4>{this.props.obj.post}
+            </h4></strong></td></tr>
+            <th colspan="2"><Link clasName="link" to={`/post/${this.props.obj._id}`}><Button color="info">VIEW POST</Button></Link> </th>
+              <tr>
+
+              </tr>
+           
+          </tbody>
+        </Table>
+       
       </>
     );
   }

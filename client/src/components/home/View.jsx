@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   Container, Col, Label,
@@ -7,16 +7,15 @@ import {
 import { Link } from 'react-router-dom';
 import './post.css';
 import { useSelector, useDispatch } from 'react-redux';
+import { commentAction, likePostAction, unlikePostAction } from '../../redux/actions/users/userActions';
 const View = (props) => {
 
   const ids = useParams()
   const [posts, setPosts] = useState([]);
-  const [data, setData] = useState([]);
   const state = useSelector(state => {
     return state.userLogin;
   });
-  const { loading, userInfo, error } = state
-  // console.log(state);
+  const { userInfo } = state
   const [visible, setVisible] = useState(false)
   const [dislike, setDislike] = useState(false)
   const [comment, setComment] = useState(false)
@@ -37,107 +36,36 @@ const View = (props) => {
         }))
   }
   );
+  const dispatch = useDispatch();
   //likePost API call
   const likePost = (id, user_Id) => {
-    fetch('http://localhost:4000/app/like', {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer" + localStorage.getItem("jwt")
-      },
-      body: JSON.stringify({
-        postId: id,
-        user_id: user_Id
-      })
-    }).then(res => res.json())
-      .then(result => {
+    console.log(id);
+    console.log(user_Id)
+    dispatch(likePostAction(id, user_Id))
+    setVisible(true);
+    setDislike(false);
+    setComment(false);
+    setBlankcomment(false);
 
-        const newData = data.map(post => {
-          if (post._id == result._id) {
-            return result
-
-          } else {
-            return post
-
-          }
-        })
-        setData(newData)
-        setVisible(true)
-        setDislike(false)
-        setBlankcomment(false);
-        setComment(false);
-
-      }).catch(err => {
-        console.log(err)
-      })
   }
   //DisLike Post API
   const unlikePost = (id, user_Id) => {
-    fetch('http://localhost:4000/app/unlike', {
-      method: "put",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer" + localStorage.getItem("jwt")
-      },
-      body: JSON.stringify({
-        postId: id,
-        user_id: user_Id
-      })
-    }).then(res => res.json())
-      .then(result => {
-        console.log(result.likes)
-        const newData = data.map(posts => {
-          if (posts._id == result._id) {
-            return result
-          } else {
-            return posts
-          }
-        })
-        setData(newData)
-        setDislike(true)
-        setVisible(false)
-        setBlankcomment(false);
-        setComment(false);
-      }).catch(err => {
-        console.log(err)
-      })
+    dispatch(unlikePostAction(id, user_Id))
+    setVisible(false);
+    setDislike(true);
+    setComment(false);
+    setBlankcomment(false);
   }
   //post comment API
   const makeComment = (texts, post_id, user_Name, user_Id) => {
-    if (texts == '') {
+    if (texts === '') {
       setBlankcomment(true)
     } else {
-      fetch('http://localhost:4000/app/comment', {
-        method: "put",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer" + localStorage.getItem("jwt")
-        },
-        body: JSON.stringify({
-          postId: post_id,
-          user_name: user_Name,
-          text: texts,
-          user_id: user_Id
-        })
-      }).then(res => res.json())
-        .then(result => {
-          console.log(result)
-          const newData = data.map(posts => {
-            if (posts._id == result._id) {
-              return result
-            } else {
-              return posts
-            }
-
-          })
-          setData(newData)
-          setComment(true);
-          setVisible(false);
-          setDislike(false);
-          setBlankcomment(false);
-        }).catch(err => {
-          console.log(err);
-        })
+      dispatch(commentAction(texts, post_id, user_Name, user_Id))
+      setVisible(false);
+      setDislike(false);
+      setComment(true);
+      setBlankcomment(false);
     }
   }
   return (
@@ -165,7 +93,7 @@ const View = (props) => {
       <Col>
         <Label className="font-weight-bold details">LIKES: </Label>
         <Label className="details">{
-          posts.likes == undefined ?
+          posts.likes === undefined ?
             <p>No Likes Yet</p>
             :
             <p>{posts.likes.length}<br /></p>}
@@ -173,7 +101,7 @@ const View = (props) => {
       </Col>
       <Col>
         {
-          posts.likes == undefined ?
+          posts.likes === undefined ?
             <p>No likes Yet</p>
 
             :
@@ -202,7 +130,7 @@ const View = (props) => {
         </Form>
       </Col>
       <Col className="show-comment">
-        {posts.comments == undefined || null ? <h3>No Comments Yet</h3>
+        {posts.comments === undefined || null ? <h3>No Comments Yet</h3>
           :
           posts.comments.map(record => {
             return (

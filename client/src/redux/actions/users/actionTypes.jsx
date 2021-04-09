@@ -28,6 +28,15 @@ export const LIKE_REQUEST = 'LIKE_REQUEST';
 export const LIKE_SUCCESS = 'LIKE_SUCCESS';
 export const LIKE_FAIL = 'LIKE_FAIL';
 
+export const UNLIKE_REQUEST = 'UNLIKE_REQUEST';
+export const UNLIKE_SUCCESS = 'UNLIKE_SUCCESS';
+export const UNLIKE_FAIL = 'UNLIKE_FAIL';
+
+export const COMMENT_REQUEST = 'COMMENT_REQUEST';
+export const COMMENT_SUCCESS = 'COMMENT_SUCCESS';
+export const COMMENT_FAIL = 'COMMENT_FAIL';
+
 export const IMAGE_REQUEST = 'IMAGE_REQUEST';
 export const IMAGE_SUCCESS = 'IMAGE_SUCCESS';
 export const IMAGE_FAIL = 'IMAGE_FAIL';
+

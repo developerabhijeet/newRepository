@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import {
-  Container, Col, Form,
-  FormGroup, Label, Input,
-  Button, Alert
+  Col, Form, Input, Alert, Button
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import './post.css';
 const Search = (props) => {
   const [search, setSearch] = useState('')
   const [postDetails, setPostDetails] = useState([])
-  const [file, setFile] = useState([])
   const [visible, setVisible] = useState(false);
   const onDismiss = () => {
     setVisible(false);
+    setPostDetails([])
+    setSearch('')
+    
   }
   const fetchPost = (postName) => {
     setSearch(postName)
@@ -43,7 +43,7 @@ const Search = (props) => {
       </Form>
       <ul>
         {postDetails.map(post => {
-          return <Link to={`/post/${post._id}`}><li>{post.post}</li></Link>
+          return <Link to={`/post/${post._id}`}><Button color="danger">{post.post}</Button><br/><br/></Link>
         })}
       </ul>
     </div>

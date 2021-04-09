@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Container, Col, Form,
   FormGroup, Label, Input,
@@ -23,7 +23,7 @@ const EditProfile = ({ history }) => {
   }
   const dispatch = useDispatch();
   const updateProfileHandler = e => {
-    if (bio == '' || tech == '' || jobtitle == '') {
+    if (bio === '' || tech === '' || jobtitle === '') {
       alert('Fields cannot be empty')
     } else {
       e.preventDefault();
@@ -36,21 +36,20 @@ const EditProfile = ({ history }) => {
     console.log(file)
     const filedata = new FormData();
     filedata.append("file", file);
-    dispatch(uploadImageAction(id, file.name))
   }
   return (
     <Container className="signup">
       <Alert color="success" isOpen={visible} toggle={onDismiss}>
         Your Profile Edited Successfully!
       </Alert>
-      <h2>Edit Profile</h2>
-      <Form className="form" onSubmit={updateProfileHandler} >
+      <center><h2>Edit Your Profile</h2></center>
+      <Form className="form" onSubmit={updateProfileHandler}>
         <Col>
           <FormGroup>
             <center>
               <strong>
                 <i>
-                  <Label for="name">Name: {userInfo.user.name}</Label>
+                  <Button color="warning" for="name">Name: {userInfo.user.name}</Button>
                 </i>
               </strong>
             </center>

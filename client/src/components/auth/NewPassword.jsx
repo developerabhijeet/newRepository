@@ -5,7 +5,7 @@ import {
   Button,
 } from 'reactstrap';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { newPasswordAction } from '../../redux/actions/users/userActions';
 const NewPassword = ({ history }) => {
   const { token } = useParams();

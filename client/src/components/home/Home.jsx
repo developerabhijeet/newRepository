@@ -1,13 +1,11 @@
-import React, { Component, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
 import Search from './Search';
 import DataTable from './data-table';
 import {
-	Container, Col, Form,
-	FormGroup, Label, Input,
-	Button,
+	Container,
+	Button,Pagination, PaginationItem, PaginationLink
 } from 'reactstrap';
 class Home extends Component {
 	constructor(props) {
@@ -24,14 +22,18 @@ class Home extends Component {
 			})
 	}
 	dataTable() {
-		return this.state.postsCollection.map((data, i) => {
+		
+		return this.state.postsCollection.map((data,i) => {
+			console.log(i)
 			return <DataTable obj={data} key={i} />
 		});
 	}
 	render() {
 		return (
 			<div>
+
 				<center>
+					
 					<div className="search-div">
 						<Search />
 					</div>
@@ -39,12 +41,57 @@ class Home extends Component {
 						<h6 className=""><Link to="/post"><Button color="primary" className="w-25 btn-post">Post Your Errors buddy!</Button></Link></h6>
 					</div>
 					<Container className="home">
+					<br />
+		 
+					<h2 className="font-weight-bold details">See All Posted Errors: </h2>
+					<br/>
+					<Pagination aria-label="Page navigation example">
+      <PaginationItem disabled>
+        <PaginationLink first href="#" />
+      </PaginationItem>
+      <PaginationItem disabled>
+        <PaginationLink previous href="#" />
+      </PaginationItem>
+      <PaginationItem active>
+        <PaginationLink href="#">
+          1
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#">
+          2
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#">
+          3
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#">
+          4
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#">
+          5
+        </PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink next href="#" />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink last href="#" />
+      </PaginationItem>
+    </Pagination>
 						<br />
-						<Label className="font-weight-bold details">All Posted Errors: </Label>
-						{this.dataTable()}
+			
+						{this.dataTable(1)}
 						<br />
+					
 					</Container>
 				</center>
+
 			</div>
 		)
 	}

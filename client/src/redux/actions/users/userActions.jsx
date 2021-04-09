@@ -1,5 +1,5 @@
 //causing change of state in application
-import { USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, POST_REQUEST, POST_SUCCESS, POST_FAIL, USER_EDITPROFILE_FAIL, USER_EDITPROFILE_SUCCESS, USER_EDITPROFILE_REQUEST, USER_LOGOUT_SUCCESS, NEWPASSWORD_FAIL, NEWPASSWORD_REQUEST, NEWPASSWORD_SUCCESS, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAIL, IMAGE_REQUEST, IMAGE_SUCCESS, IMAGE_FAIL } from './actionTypes';
+import { USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, POST_REQUEST, POST_SUCCESS, POST_FAIL, USER_EDITPROFILE_FAIL, USER_EDITPROFILE_SUCCESS, USER_EDITPROFILE_REQUEST, USER_LOGOUT_SUCCESS, NEWPASSWORD_FAIL, NEWPASSWORD_REQUEST, NEWPASSWORD_SUCCESS, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAIL, IMAGE_REQUEST, IMAGE_SUCCESS, IMAGE_FAIL,LIKE_REQUEST, LIKE_SUCCESS, LIKE_FAIL,UNLIKE_REQUEST, UNLIKE_SUCCESS, UNLIKE_FAIL, COMMENT_REQUEST, COMMENT_SUCCESS, COMMENT_FAIL } from './actionTypes';
 import axios from 'axios';
 
 const signupuserAction = (name, email, password, bio, jobtitle, tech) => {
@@ -227,14 +227,14 @@ const uploadImageAction = (userid, filedata) => {
           "Content-Type": "application/json",
         }
       };
-      console.log("name",filedata);
+      console.log(userid)
+      console.log(filedata)
       const data = await axios.post('http://localhost:4000/app/upload', {
         userid,
         filedata,
       },
         config
       );
-      console.log(data)
       dispatch({
         type: IMAGE_SUCCESS,
         payload: data
@@ -247,5 +247,111 @@ const uploadImageAction = (userid, filedata) => {
     }
   }
 }
+//like post
+const likePostAction = (id, user_Id)=>{
+  return async (dispatch,getState)=>{
+    try{
+      dispatch({
+        type: LIKE_REQUEST,
+      });
+      const {userInfo} = getState().userLogin;
+      const config = {
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization': `Bearer ${userInfo._id}`,
+        },
+      };
+      const {data} = axios.put('http://localhost:4000/app/like',{
+        id,
+        user_Id,
+      },
+      config
+      );
+      if(id === data._id){
+        dispatch({
+          type: LIKE_SUCCESS,
+          payload: data,
+        });
+      }
+    }catch(error){
+      dispatch({
+        type: LIKE_FAIL,
+        payload: error.response && error.response.data.message
+      });
+    }
+  };
+};
 
-export { signupuserAction, loginUserAction, postAction, logoutUserAction, editUserProfile, newPasswordAction, resetPasswordAction, uploadImageAction };
+//unlike
+const unlikePostAction = (id, user_Id)=>{
+  return async (dispatch,getState)=>{
+    try{
+      dispatch({
+        type: UNLIKE_REQUEST,
+      });
+      const {userInfo} = getState().userLogin;
+      const config = {
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization': `Bearer ${userInfo._id}`,
+        },
+      };
+      const {data} = axios.put('http://localhost:4000/app/unlike',{
+        id,
+        user_Id,
+      },
+      config
+      );
+      console.log(data)
+      if(id === data._id){
+        dispatch({
+          type: UNLIKE_SUCCESS,
+          payload: data,
+        });
+      }
+    }catch(error){
+      dispatch({
+        type: UNLIKE_FAIL,
+        payload: error.response && error.response.data.message
+      });
+    }
+  };
+};
+
+const commentAction = (texts,post_id, user_Name,user_Id)=>{
+  return async (dispatch,getState)=>{
+    try{
+      dispatch({
+        type: COMMENT_REQUEST,
+      });
+      const {userInfo} = getState().userLogin;
+      const config = {
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization': `Bearer ${userInfo._id}`,
+        },
+      };
+      const {data} = axios.put('http://localhost:4000/app/comment',{
+        texts,
+        post_id,
+        user_Name,
+        user_Id,
+      },
+      config
+      );
+      console.log(data)
+      if(post_id === data._id){
+        dispatch({
+          type: COMMENT_SUCCESS,
+          payload: data,
+        });
+      }
+    }catch(error){
+      dispatch({
+        type: COMMENT_FAIL,
+        payload: error.response && error.response.data.message
+      });
+    }
+  };
+};
+export { signupuserAction, loginUserAction, postAction, logoutUserAction, editUserProfile, newPasswordAction, resetPasswordAction, uploadImageAction,likePostAction,unlikePostAction, commentAction };

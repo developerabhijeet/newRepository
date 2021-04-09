@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table } from 'reactstrap';
 import { Link, useParams } from 'react-router-dom';
 const Profile = () => {

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import {
   Collapse,
@@ -11,11 +11,10 @@ import {
 import download from './download.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUserAction } from '../../redux/actions/users/userActions';
-import Footer from './Footer';
 
 const ForallNavbar = () => {
   const state = useSelector(state => state.userLogin)
-  const { loading, userInfo, error } = state;
+  const { userInfo } = state;
   const dispatch = useDispatch();
   const logoutHandler = () => {
     dispatch(logoutUserAction())
