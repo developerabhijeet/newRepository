@@ -1,0 +1,83 @@
+.searchfield{
+  border-radius: 10px 20px 10px 20px;
+  border-color: darkorange;
+  box-shadow: darkorange;
+}
+.post{
+  background-color: #383838;
+  color: white;
+}
+.viewpost{
+  background-color: #383838;
+  color: white;
+}
+.problem{
+  width:100px;
+  height:400px;
+  align-items:center;
+}
+.posts{
+  font-size: 25px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 20px;
+  background-color: darkorange;
+  box-shadow: 10px 10px 10px;
+  padding-top: 30px;
+
+}
+.details{
+  font-size: 25px;
+  font-style: italic;
+  padding-left: 10px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 20px;
+}
+.container{
+  padding:30px;
+}
+.formstyle{
+  padding: 20px;
+  align-items: center;
+}
+.comment-area{
+  width:800px;
+  height:180px;
+  
+}
+.primary{
+  background-color: darkorange;
+}
+.show-comment{
+  box-shadow: 10px 5px 5px 10px #383838;
+  color: black;
+  text-align: justify;
+
+}
+.posted-by{
+  color: black;
+  font-size:18px;
+  font-style: "Times New Roman";
+  text-decoration: underline;
+}
+.comment{
+  color: black;
+  font-size: 25px;
+  font-style:oblique;
+  font-weight: 30px;
+
+}
+.link{
+  font-size: 20px;
+  padding-top: 40px;
+  color: darkorange;
+  text-decoration: underline ;
+}
+
+.search-div{ 
+
+  padding-top:90px;
+  
+} 
+.home{
+  margin-left:580px;
+}

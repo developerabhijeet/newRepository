@@ -1,0 +1,51 @@
+.blank{
+  margin-left: 1500px;
+}
+.navs{
+  background-color: black;
+  color: white;
+  width:70px;
+  height: 50px;
+  align-items: center;
+}.navs:hover{
+  background-color: white;
+  width:80px;
+  height: 70px;
+  align-items: center;
+}
+.navigation{
+  background-color: darkorange;
+  color: white;
+}
+.logonav{
+  width: 80px;
+  height: 50px;
+}
+.footer{
+  background-color: #383838;
+  color: white;
+}
+.login{
+  padding:60px;
+}
+.signup{
+  padding: 60px;
+}
+.home-text{
+  background-color:white;
+  box-shadow: 2px 2px 2px 2px grey;
+  height: 50px;
+  padding: 10px;
+}
+.post-text{
+  padding: 60px;
+}
+.post-link{
+  padding: 60px;
+}
+.home{
+  padding:0px;
+}
+.profile{
+  padding: 50px;
+}

@@ -1,0 +1,11 @@
+POST http://localhost:4000/app/signup
+Content-Type: application/json
+
+{
+  "name":"Abhijeet Tiwari",
+  "email":"Abhi@gmail.com",
+  "password":"123456",
+  "bio":"I am a software developer",
+  "jobtitle":"Trainee Developer",
+  "tech":"ReactJS" 
+}
