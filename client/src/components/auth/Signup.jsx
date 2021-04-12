@@ -22,7 +22,7 @@ const Signup = ({ history }) => {
   //Redirecting if user is login/authenticated
   useEffect(() => {
     if (userInfo) {
-      history.push('/');
+      history.push('/login');
     }
   }, [userInfo])
   const submitHandler = e => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {
   Collapse,
@@ -12,14 +12,15 @@ import download from './download.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUserAction } from '../../redux/actions/users/userActions';
 
-const ForallNavbar = () => {
+const ForallNavbar = ({history}) => {
   const state = useSelector(state => state.userLogin)
-  const { userInfo } = state;
+  const { loading,userInfo,error} = state;
   const dispatch = useDispatch();
   const logoutHandler = () => {
     dispatch(logoutUserAction())
   }
   console.log(userInfo)
+
   return (
     <div>
       <Navbar className="light navigation" color="primary" light expand="md">
@@ -38,7 +39,7 @@ const ForallNavbar = () => {
                   <NavLink><Link to="/userinfo">Activity</Link></NavLink>
                 </NavItem>
                 <NavItem className="navs">
-                  <NavLink><Link to={`/profile/${userInfo.user._id}`}>Profile</Link></NavLink>
+                  <NavLink><Link to={`/profile/${userInfo?.user?._id}`}>Profile</Link></NavLink>
                 </NavItem>
                 <NavItem className="navs">
                   <NavLink onClick={logoutHandler}><Link to="/login"> Logout</Link></NavLink>
