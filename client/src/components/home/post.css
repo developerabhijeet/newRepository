@@ -20,8 +20,10 @@
   font-size: 25px;
   font-family: 'Times New Roman', Times, serif;
   font-weight: 20px;
-  background-color: darkorange;
-  box-shadow: 10px 10px 10px;
+  background-color: #3386FF ;
+  color: white;
+  box-shadow: 10px 20px 10px;
+  border-radius: 10px 10px 10px 10px;
   padding-top: 30px;
 
 }

@@ -15,6 +15,7 @@ import EditProfile from './components/home/EditProfile';
 import Reset from './components/auth/Reset';
 import NewPassword from './components/auth/NewPassword';
 import './App.css';
+import InfoGraph from './components/usergraph/InfoGraph';
 function App() {
 
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route exact path="/editprofile" component={EditProfile} />
           <Route exact path="/newpassword/:token" component={NewPassword} />
           <Route exact path="/search" component={Search} />
+          <Route exact path="/userinfo" component={InfoGraph} />
         </Switch>
       </UserContext.Provider>
       <Footer />

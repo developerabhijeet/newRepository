@@ -15,7 +15,7 @@ class DataTable extends Component {
             <tr>
             <td> <strong><h4>{this.props.obj.post}
             </h4></strong></td></tr>
-            <th colspan="2"><Link clasName="link" to={`/post/${this.props.obj._id}`}><Button color="info">VIEW POST</Button></Link> </th>
+            <th colspan="2"><Link clasName="link" to={`/post/${this.props.obj._id}`}><Button color="primary">VIEW POST</Button></Link> </th>
               <tr>
 
               </tr>
