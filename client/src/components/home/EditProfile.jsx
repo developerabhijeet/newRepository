@@ -17,14 +17,17 @@ const EditProfile = ({ history }) => {
   const [jobtitle, setJobtitle] = useState(userInfo.user?.jobtitle);
   const [file, setFile] = useState();
   const [visible, setVisible] = useState(false);
+  const [blankError, setBlankError] = useState(false);
   const onDismiss = () => {
     setVisible(false);
+    setBlankError(false);
     history.push(`/profile/${id}`)
   }
   const dispatch = useDispatch();
   const updateProfileHandler = e => {
     if (bio === '' || tech === '' || jobtitle === '') {
-      alert('Fields cannot be empty')
+      setBlankError(true)
+      setVisible(false);
     } else {
       e.preventDefault();
       dispatch(editUserProfile(id, bio, tech, jobtitle))
@@ -41,6 +44,9 @@ const EditProfile = ({ history }) => {
     <Container className="signup">
       <Alert color="success" isOpen={visible} toggle={onDismiss}>
         Your Profile Edited Successfully!
+      </Alert>
+      <Alert color="danger" isOpen={blankError} toggle={onDismiss}>
+      OOPS! Fields cannot be Empty.
       </Alert>
       <center><h2>Edit Your Profile</h2></center>
       <Form className="form" onSubmit={updateProfileHandler}>
@@ -94,7 +100,7 @@ const EditProfile = ({ history }) => {
             />
           </FormGroup>
         </Col>
-        <Col>
+        {/* <Col>
           <form encType="multipart/form-data">
             <FormGroup>
               <Label>Upload Profile Image*</Label>
@@ -108,9 +114,9 @@ const EditProfile = ({ history }) => {
               <br />
               <Button color="primary" onClick={updateImage} type="submit" className="btn-submit">Upload</Button>
             </FormGroup>
-          </form>
+          </form> */}
           <br />
-        </Col>
+        {/* </Col> */}
         <Col>
           <Button color="primary" className="btn-submit">Submit</Button>
         </Col>

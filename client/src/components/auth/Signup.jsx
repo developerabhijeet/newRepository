@@ -13,21 +13,24 @@ const Signup = ({ history }) => {
   const [bio, setBio] = useState('');
   const [jobtitle, setJobtitle] = useState('');
   const [tech, setTech] = useState('');
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   //getting user login from store
-  const userLogin = useSelector(state => state.userLogin);
-  const { userInfo } = userLogin;
+  const state = useSelector(state => {
+    return state.userLogin;
+  });
+  const { loading, userInfo, error } = state
 
   //Redirecting if user is login/authenticated
   useEffect(() => {
     if (userInfo) {
-      history.push('/login');
+      history.push('/');
     }
   }, [userInfo])
   const submitHandler = e => {
     e.preventDefault();
     //dispatching action
+
     dispatch(signupuserAction(name, email, password, bio, jobtitle, tech));
   }
   return (

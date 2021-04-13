@@ -21,9 +21,10 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider>
-      <ForallNavbar />
+        <ForallNavbar />
+
         <Switch>
-     
+    
           <Route exact path="/" component={Home} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />

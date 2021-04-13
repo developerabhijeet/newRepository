@@ -1,76 +1,58 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/SignupModels');
-const ProfileImage = require('../models/ProfileImage');
+// const ProfileImage = require('../models/ProfileImage');
 const Post = require('../models/Post');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
 const crypto = require('crypto');
-const multer = require('multer');
-const path = require('path')
-const sendgridTransport = require('nodemailer-sendgrid-transport')
+// const multer = require('multer');
+// const path = require('path')
 const requireLogin = require('../middleware/requireLogin')
 
-router.use('/public', express.static('public'));
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-});
-
-const upload = multer();
-
-const maxAge = 5 * 24 * 60 * 60
-const createJWT = id => {
-  return jwt.sign({ id }, 'chatroom secret', {
-    expiresIn: maxAge
-  })
-}
 const transporter = nodemailer.createTransport(sendgridTransport({
   auth: {
     api_key: "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"
   }
 }))
-router.post('/upload',upload.single("file"),async (req,res)=>{
+// router.post('/upload',upload.single("file"),async (req,res)=>{
  
   
-  const id = req.body.userid
-  const file = req.file;
-  console.log("file",file)
-  try{
-    const url = req.protocol+'://'+req.get('host')
-    console.log(req.file);
-    const Imagedata ={
-      image :url + "/public/" + file.filename,
-    }
-    console.log
-    await User.findByIdAndUpdate(id, Imagedata).then(data =>res.json(data))
-      .catch(error => {
-        res.json(error)
-      })
-  }catch(error){
-    res.status(400).send(error)
-  }
-})
+//   const id = req.body.userid
+//   const file = req.file;
+//   console.log("file",file)
+//   try{
+//     const url = req.protocol+'://'+req.get('host')
+//     console.log(req.file);
+//     const Imagedata ={
+//       image :url + "/public/" + file.filename,
+//     }
+//     console.log
+//     await User.findByIdAndUpdate(id, Imagedata).then(data =>res.json(data))
+//       .catch(error => {
+//         res.json(error)
+//       })
+//   }catch(error){
+//     res.status(400).send(error)
+//   }
+// })
 
-router.route('/profileImage').get(async (req,res)=>{
-  try{
-    const imageData = await ProfileImage.find();
-    res.status(200).send(imageData);
-    imageData.exec(function(err,data){
-      if(err) throw err;
+// router.route('/profileImage').get(async (req,res)=>{
+//   try{
+//     const imageData = await ProfileImage.find();
+//     res.status(200).send(imageData);
+//     imageData.exec(function(err,data){
+//       if(err) throw err;
       
-      res.render({records: data})
-    })
-  }catch(error){
-    res.status(400).send(error);
-  }
-})
+//       res.render({records: data})
+//     })
+//   }catch(error){
+//     res.status(400).send(error);
+//   }
+// })
 
 // router.put('/upload',upload.single("image"),async (req, res) => {
 //   // // console.log(req)
@@ -89,29 +71,6 @@ router.route('/profileImage').get(async (req,res)=>{
 
  
 // })
-router.route('/editprofile').put(async(req, res) => {
-  let id = req.body.id;
- 
-  const user = await User.findById(id);
-  if(user){
-   
-      user.bio= req.body.bio || user.bio;
-      user.tech= req.body.tech || user.tech;
-      user.jobtitle= req.body.jobtitle || user.jobtitle;
-  const updatedUser = await user.save();
-    
-  res.json({
-    _id: updatedUser._id,
-    name: updatedUser.name,
-    email: updatedUser.email,
-    password: updatedUser.password,
-    bio: updatedUser.bio,
-    jobtitle: updatedUser.jobtitle,
-    tech: updatedUser.tech
-  }); 
-  } 
-})
-
 router.post('/signup', async (request, response) => {
   const saltPassword = await bcrypt.genSalt(10)
   const securePassword = await bcrypt.hash(request.body.password, saltPassword)
@@ -123,11 +82,10 @@ router.post('/signup', async (request, response) => {
     jobtitle: request.body.jobtitle,
     tech: request.body.tech
   })
-  if (signedUp.name == "" || signedUp.email == "" || signedUp.password == "") {
-    response.json({ message: "You can keep the required fields empty" })
-  }
+  
   signedUp.save()
     .then(data => {
+      console.log(data.email)
       transporter.sendMail({
         to: data.email,
         from: "abhijeettiwari1705@gmail.com",
@@ -142,6 +100,8 @@ router.post('/signup', async (request, response) => {
       response.json(error)
     })
 })
+
+
 router.route('/resetpassword').post((req, res) => {
 
   crypto.randomBytes(32, (err, buffer) => {
@@ -239,6 +199,29 @@ router.route('/post/:id').get(function (req, res) {
 
 });
 
+
+router.route('/editprofile').put(async(req, res) => {
+  let id = req.body.id;
+ 
+  const user = await User.findById(id);
+  if(user){
+   
+      user.bio= req.body.bio || user.bio;
+      user.tech= req.body.tech || user.tech;
+      user.jobtitle= req.body.jobtitle || user.jobtitle;
+  const updatedUser = await user.save();
+    
+  res.json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    password: updatedUser.password,
+    bio: updatedUser.bio,
+    jobtitle: updatedUser.jobtitle,
+    tech: updatedUser.tech
+  }); 
+  } 
+})
 
 const alertError = (err) => {
   console.log('error.message', err.message);

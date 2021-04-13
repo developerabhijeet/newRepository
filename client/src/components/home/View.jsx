@@ -77,7 +77,7 @@ const View = (props) => {
         You Disliked the Post!
       </Alert>
       <Col>
-        <Label className="font-weight-bold posts">{posts.post}</Label>
+        <Label className="font-weight-bold posts" color="#3386FF">{posts.post}</Label>
       </Col>
       <Col>
         <Label className="font-weight-bold details">DOMAIN: </Label><Label className="details">  {posts.domain}</Label>

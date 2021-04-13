@@ -7,6 +7,7 @@ const middlewares = [thunk];
 //combining all reducers
 const reducer = combineReducers({
   userLogin: userReducer,//for Signup and Login both
+ 
   postProblem: postReducer,
   updatedUser: updateReducer,
   updatePassword: newPassword,
@@ -19,7 +20,7 @@ const reducer = combineReducers({
 //getting user from localStorage and save it into our store
 
 const userAuthFromStorage = localStorage.getItem('userAuthData')
-  ? JSON.stringify(localStorage.getItem('userAuthData')) : null;
+  ? JSON.parse(localStorage.getItem('userAuthData')) : null;
 
 const initialState = {
   userLogin: { userInfo: userAuthFromStorage },

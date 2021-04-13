@@ -13,6 +13,7 @@ const signupuserAction = (name, email, password, bio, jobtitle, tech) => {
           'Content-Type': 'application/json',
         },
       };
+      console.log(email);
       const { data } = await axios.post('http://localhost:4000/app/signup', {
         name,
         email,
@@ -22,14 +23,18 @@ const signupuserAction = (name, email, password, bio, jobtitle, tech) => {
         tech
       },
         config
-      );
+      ).then((res)=>console.log(res.data))
+      .catch((err)=>console.log(err));
       dispatch({
         type: USER_REGISTER_SUCCESS,
         payload: data
       });
+      console.log(data)
       //saving user to localstorage
+      //localStorage.removeItem('userAuthData');
       localStorage.setItem('userAuthData', JSON.stringify(data));
     } catch (error) {
+      console.log(error);
       dispatch({
         type: USER_REGISTER_FAIL,
         payload: error.response && error.response.data.message,
@@ -52,17 +57,18 @@ const loginUserAction = (email, password) => {
           'Content-Type': 'application/json',
         },
       };
+      console.log(email)
       const { data } = await axios.post('http://localhost:4000/app/login', {
         email,
         password,
       },
         config
       );
+      console.log(data);
       dispatch({
         type: USER_LOGIN_SUCCESS,
         payload: data,
       });
-      console.log(data);
       //saving user to localStorage
       localStorage.setItem('userAuthData', JSON.stringify(data));
     } catch (error) {
@@ -145,6 +151,7 @@ const editUserProfile = (id, bio, tech, jobtitle) => {
         payload: data,
       });
 
+      localStorage.setItem('userAuthData', JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: USER_EDITPROFILE_FAIL,

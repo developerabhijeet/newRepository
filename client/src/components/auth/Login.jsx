@@ -16,9 +16,9 @@ const Login = ({ history }) => {
     return state.userLogin;
   });
   const { loading, userInfo, error } = state
-  console.log(state)
   const submitHandler = e => {
     e.preventDefault();
+    console.log(email)
     dispatch(loginUserAction(email, password));
   };
   useEffect(() => {
